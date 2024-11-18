@@ -5,6 +5,11 @@ import { error } from "console";
 export const getBlog = async (req: Request, res: Response) => {
   try {
     const blogs = await Blog.find();
+
+    if(!blogs) {
+      return res.status(404).json({msg: "Not found"});
+    }
+
     console.log(blogs);
     res.status(200).json(blogs);
   } catch (error) {
@@ -38,7 +43,7 @@ export const updateBlog = async (req: Request, res: Response) => {
     );
 
     if (!updatedBlog)
-      return res.status(404).json({ message: "Blog not found" });
+      return res.status(404).json({ message: "Blog not found" }); // it may not works, remember to check this out
 
     res.status(200).json(updatedBlog);
   } catch {
